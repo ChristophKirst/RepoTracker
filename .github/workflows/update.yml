@@ -1,7 +1,8 @@
 name: RepoTracker
 on:
   schedule:
-  -cron "0 0 * * 0"
+    - cron: "0 0 * * 0"
+ 
   watch:
     types: [started]
   
@@ -11,18 +12,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
-    - name: clones
-      run: |
-        curl --request GET \
-        --url https://api.github.com/repos/${{ github.repository }}/traffic/clones \
-        --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-        --header 'content-type: application/json' \
-    - name: views
+    - name: update
       run: |
         pip install requests
-        python read_views.py ${{ secrets.PASSWORD }}
-    - name: ls
-      run: ls
+        python RepoTracker/update.py ${{ secrets.TOKEN }}
     - name: push      
       run: |
         git config --global user.name 'ChristophKirst'
