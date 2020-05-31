@@ -5,7 +5,6 @@ ReproTracker
 A module to update and store information about github traffic and views etc.
 """
 
-import os
 import time
 import json
 import requests
@@ -81,7 +80,7 @@ def update(user, repo, token, info="/traffic/clones", method='timestamps', url_t
         
     data['totals'] = totals;
   
-  print(data);
+  #print(data);
   
   #write file
   with open(file, 'w') as f:
@@ -93,10 +92,17 @@ if __name__ == "__main__":
   import sys;
   token = sys.argv[1];
   
+  error = [];
   for repo in repos:
     print('Accessing repository %s' % repo)
     for info, method in infos.items():
       print("   %s" % info)
-      update(user, repo, token, info, method=method);
+      try:
+        update(user, repo, token, info, method=method);
+      except:
+        error.append((repo, info, method))
+        
+    if len(error) > 0:
+      raise RuntimeError(error);
 
   
