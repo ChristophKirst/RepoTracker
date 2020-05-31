@@ -4,23 +4,17 @@ ReproTracker
 
 A module to update and store information about github traffic and views etc.
 """
+__author__    = 'Christoph Kirst <christoph.kirst.ck@gmail.com>'
+__copyright__ = 'Copyright (c) by Christoph Kirst'
+__license__   = 'GPL v3'
 
 import time
 import json
 import requests
 
-user = "ChristophKirst"
-
-repos = ["ClearMap", "RepoTracker"]
-
-infos = {'traffic/views' : 'timestamps',
-         'traffic/clones' : 'timestamps',
-         'traffic/popular/referrers' : 'records',
-         'traffic/popular/paths' : 'records'}
 
 url_template = "https://api.github.com/repos/%s/%s/%s"
 
-#token = "256c0e26d188c27adf7ffc6798f3aa98d99035eb"
 
 def get(user, repo, token, info="/traffic/clones", url_template=url_template):
   url = url_template % (user, repo, info);
@@ -84,18 +78,20 @@ def update(user, repo, token, info="/traffic/clones", method='timestamps', url_t
   
   #write file
   with open(file, 'w') as f:
-    data = json.dump(data, f)
+    json.dump(data, f)
 
 
 
 if __name__ == "__main__":
   import sys;
   token = sys.argv[1];
+
+  from config import user, repos, statistics  
   
   error = [];
   for repo in repos:
     print('Accessing repository %s' % repo)
-    for info, method in infos.items():
+    for info, method in statistics.items():
       print("   %s" % info)
       try:
         update(user, repo, token, info, method=method);
