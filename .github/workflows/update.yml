@@ -15,7 +15,7 @@ jobs:
     - name: update
       run: |
         pip install requests
-        python RepoTracker/update.py ${{ secrets.GITHUB_TOKEN }}
+        python RepoTracker/update.py ${{ secrets.TOKEN }}
     - name: push      
       run: |
         git config --global user.name 'ChristophKirst'
