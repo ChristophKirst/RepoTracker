@@ -13,6 +13,8 @@ user = "ChristophKirst";
 """Username for the repository to track"""
 
 repos = ["ClearMap", 
+         "ClearMap2",
+         "ClearMap2Documentation",
          "RepoTracker"];
 """List of repository names to track"""
 
