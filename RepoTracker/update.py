@@ -98,7 +98,7 @@ if __name__ == "__main__":
       except:
         error.append((repo, info, method))
         
-    if len(error) > 0:
+  if len(error) > 0:
       raise RuntimeError(error);
 
   
